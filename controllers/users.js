@@ -11,7 +11,7 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 const getUserMe = (req, res, next) => {
     const { _id } = req.user;
     User.findById(_id)
-        .orfaile(() => {
+        .orFail(() => {
             throw new NotFoundError('Не найден')
         })
         .then((user) => {

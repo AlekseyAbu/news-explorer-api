@@ -14,7 +14,7 @@ const {
 const userRouter = require('./routes/users.js');
 const articleRouter = require('./routes/articles.js');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 
 const app = express();
 
