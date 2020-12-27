@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
+// eslint-disable-next-line import/no-extraneous-dependencies
 const { celebrate, Joi, errors } = require('celebrate');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const bodyParser = require('body-parser');
 const auth = require('./middlewares/auth.js');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -21,7 +23,7 @@ const app = express();
 mongoose.connect('mongodb://localhost:27017/project-diplom', {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useFindAndModify: false
+  useFindAndModify: false,
 });
 
 app.use(bodyParser.json());
@@ -34,7 +36,7 @@ app.post('/signup',
       email: Joi.string().required().email(),
       password: Joi.string().required().min(6),
       name: Joi.string().required(),
-    })
+    }),
   }),
   registration);
 app.post('/signin',
@@ -42,9 +44,9 @@ app.post('/signin',
     body: Joi.object().keys({
       email: Joi.string().required().email(),
       password: Joi.string().required().min(6),
-    })
+    }),
   }),
-  authorization)
+  authorization);
 
 app.use('/users', auth, userRouter);
 app.use('/articles', auth, articleRouter);
@@ -60,7 +62,6 @@ app.use((err, req, res, next) => {
   res
     .status(statusCode)
     .send({
-      // проверяем статус и выставляем сообщение в зависимости от него
       message: statusCode === 500
         ? 'На сервере произошла ошибка'
         : message,
@@ -68,8 +69,6 @@ app.use((err, req, res, next) => {
   next();
 });
 
-
-
 app.listen(PORT, () => {
-  console.log('Поехали')
-})
+  console.log('Поехали');
+});
