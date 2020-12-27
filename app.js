@@ -16,7 +16,7 @@ const {
 const userRouter = require('./routes/users.js');
 const articleRouter = require('./routes/articles.js');
 
-const { PORT = 3001 } = process.env;
+const { PORT } = process.env;
 
 const app = express();
 
@@ -35,7 +35,7 @@ app.post('/signup',
     body: Joi.object().keys({
       email: Joi.string().required().email(),
       password: Joi.string().required().min(6),
-      name: Joi.string().required(),
+      name: Joi.string().required().min(2).max(30),
     }),
   }),
   registration);

@@ -37,13 +37,14 @@ const registration = (req, res, next) => {
         password: hash,
         name: req.body.name,
       })
-        .then((user) => res.send(user.email));
+        .then((user) => res.send({ email: user.email }));
     })
     .catch((err) => {
       if (err.statusCode === 409) {
         next(new ConflictingRequest('Пользователь существует'));
+      } else {
+        next(new BadRequest('Ошибка регистрации'));
       }
-      next(new BadRequest('Ошибка регистрации'));
       next();
     });
 };
@@ -62,10 +63,10 @@ const authorization = (req, res, next) => {
           }
           const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: 3600 });
           return res.send({ token });
-        });
+        })
+        .catch(next);
     })
     .catch((err) => {
-      next(new UnauthorizedError(''));
       next(err);
     });
 };
