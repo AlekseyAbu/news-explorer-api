@@ -59,11 +59,11 @@ const deleteArticle = (req, res, next) => {
       console.log(err.kind);
       if (err.statusCode === 404) {
         next(new NotFoundError('Карточка не найдена'));
-      }
-      if (err.kind === 'ObjectId') {
+      } else if (err.kind === 'ObjectId') {
         next(new BadRequest('Карточки не существует'));
+      } else {
+        next(err);
       }
-      next(err);
     });
 };
 
