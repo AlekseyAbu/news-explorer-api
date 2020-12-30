@@ -1,11 +1,9 @@
 require('dotenv').config();
-// eslint-disable-next-line import/no-extraneous-dependencies
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/users.js');
 const NotFoundError = require('../erorrs/not-found-err.js');
 const ConflictingRequest = require('../erorrs/conflicting-request.js');
-const BadRequest = require('../erorrs/bad-request.js');
 const UnauthorizedError = require('../erorrs/unauthorized-error.js');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
@@ -42,10 +40,8 @@ const registration = (req, res, next) => {
     .catch((err) => {
       if (err.statusCode === 409) {
         next(new ConflictingRequest('Пользователь существует'));
-      } else {
-        next(new BadRequest('Ошибка регистрации'));
       }
-      next();
+      next(err);
     });
 };
 

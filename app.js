@@ -1,9 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
-// eslint-disable-next-line import/no-extraneous-dependencies
 const { celebrate, Joi, errors } = require('celebrate');
-// eslint-disable-next-line import/no-extraneous-dependencies
 const bodyParser = require('body-parser');
 const auth = require('./middlewares/auth.js');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -13,6 +11,11 @@ const {
   authorization,
 } = require('./controllers/users.js');
 
+const {
+  DB,
+  SERVER_PORT,
+} = require('./configs.js');
+
 const userRouter = require('./routes/users.js');
 const articleRouter = require('./routes/articles.js');
 
@@ -20,7 +23,7 @@ const articleRouter = require('./routes/articles.js');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/project-diplom', {
+mongoose.connect(DB, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -69,6 +72,6 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.listen(PORT, () => {
+app.listen(SERVER_PORT, () => {
   console.log('Поехали');
 });
