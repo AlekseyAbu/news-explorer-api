@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const { celebrate, Joi, errors } = require('celebrate');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const auth = require('./middlewares/auth.js');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -29,6 +30,7 @@ mongoose.connect(DB, {
   useFindAndModify: false,
 });
 
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use(requestLogger);

@@ -26,7 +26,7 @@ const articleSchema = new Schema({
     required: true,
     validate: {
       validator(v) {
-        return /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/.test(v);
+        return /https?:\/\/(?:[-\w]+\.)?([-\w]+)\.\w+(?:\.\w+)?\/?.*/i.test(v);
       },
       message: 'URL не подходит',
     },
@@ -36,7 +36,7 @@ const articleSchema = new Schema({
     required: true,
     validate: {
       validator(v) {
-        return /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/.test(v);
+        return /https?:\/\/(?:[-\w]+\.)?([-\w]+)\.\w+(?:\.\w+)?\/?.*/i.test(v);
       },
       message: 'URL не подходит',
     },
